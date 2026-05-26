@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SATIB Insurance - Leading International Insurance Broker</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Source Sans 3',sans-serif;color:#222;background:#fff;overflow-x:hidden;}
+  a{text-decoration:none;color:inherit;}
+
+  /* NAV */
+  nav{background:#fff;border-bottom:1px solid #e0d8cc;position:sticky;top:0;z-index:999;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+  .nav-inner{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:72px;}
+  .logo{display:flex;align-items:center;gap:10px;}
+  .logo-text{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#1a3a2a;letter-spacing:1px;}
+  .logo-sub{font-size:0.6rem;color:#5a7a6a;letter-spacing:2px;text-transform:uppercase;display:block;margin-top:-2px;}
+  .nav-links{display:flex;gap:0;list-style:none;}
+  .nav-links li{position:relative;}
+  .nav-links li a{display:block;padding:0 1.1rem;line-height:72px;font-size:0.82rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#1a3a2a;transition:color .2s;}
+  .nav-links li a:hover{color:#b8860b;}
+  .nav-links li .dropdown{display:none;position:absolute;top:72px;left:0;background:#fff;min-width:180px;border:1px solid #e0d8cc;box-shadow:0 4px 16px rgba(0,0,0,0.1);z-index:1000;}
+  .nav-links li:hover .dropdown{display:block;}
+  .nav-links li .dropdown a{display:block;padding:10px 16px;line-height:1.4;font-size:0.8rem;color:#1a3a2a;border-bottom:1px solid #f0e8d8;}
+  .nav-links li .dropdown a:hover{background:#f8f4ee;color:#b8860b;}
+
+  /* HERO SLIDER */
+  .hero{position:relative;height:520px;overflow:hidden;background:#1a3a2a;}
+  .slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;opacity:0;transition:opacity .8s;}
+  .slide.active{opacity:1;}
+  .slide-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(.45);}
+  .slide:nth-child(1) .slide-bg{background-image:linear-gradient(135deg,#1a3a2a 0%,#2d6a4f 50%,#1a3a2a 100%);}
+  .slide:nth-child(2) .slide-bg{background-image:linear-gradient(135deg,#2c1a0a 0%,#7a4a1a 50%,#2c1a0a 100%);}
+  .slide:nth-child(3) .slide-bg{background-image:linear-gradient(135deg,#0a1a2c 0%,#1a4a7a 50%,#0a1a2c 100%);}
+  .slide-content{position:relative;z-index:1;color:#fff;}
+  .slide-tag{font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:#d4a843;margin-bottom:1rem;font-weight:600;}
+  .slide-content h1{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:700;line-height:1.2;margin-bottom:1.2rem;max-width:700px;}
+  .slide-content p{font-size:1rem;color:rgba(255,255,255,.8);max-width:500px;margin:0 auto 1.8rem;}
+  .slide-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+  .btn-primary{background:#d4a843;color:#1a1a1a;padding:12px 28px;font-size:.85rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;transition:background .2s;}
+  .btn-primary:hover{background:#b8860b;}
+  .btn-outline{background:transparent;color:#fff;padding:12px 28px;font-size:.85rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:2px solid rgba(255,255,255,.6);cursor:pointer;transition:all .2s;}
+  .btn-outline:hover{border-color:#d4a843;color:#d4a843;}
+  .slide-dots{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:2;}
+  .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:background .3s;}
+  .dot.active{background:#d4a843;}
+
+  /* WELCOME */
+  .welcome{max-width:1100px;margin:60px auto;padding:0 2rem;text-align:center;}
+  .section-label{font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:#d4a843;margin-bottom:.8rem;font-weight:600;}
+  .welcome h2{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:400;color:#1a3a2a;line-height:1.6;max-width:900px;margin:0 auto 2.5rem;}
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:2rem;}
+  .service-card{background:#f8f4ee;border:1px solid #e8dece;padding:2rem 1.5rem;text-align:center;transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;}
+  .service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#d4a843;}
+  .service-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1);}
+  .service-icon{width:60px;height:60px;background:#1a3a2a;margin:0 auto 1.2rem;display:flex;align-items:center;justify-content:center;}
+  .service-icon svg{width:28px;height:28px;fill:none;stroke:#d4a843;stroke-width:1.8;}
+  .service-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:#1a3a2a;margin-bottom:.8rem;}
+  .service-card p{font-size:.85rem;color:#666;line-height:1.6;}
+  .service-card a{display:inline-block;margin-top:1rem;font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#d4a843;border-bottom:1px solid transparent;transition:border-color .2s;}
+  .service-card a:hover{border-color:#d4a843;}
+
+  /* PRODUCTS */
+  .products-section{background:#1a3a2a;padding:60px 2rem;}
+  .products-inner{max-width:1100px;margin:auto;}
+  .products-section .section-label{color:#d4a843;}
+  .products-section h2{font-family:'Playfair Display',serif;font-size:2rem;color:#fff;text-align:center;margin-bottom:2.5rem;}
+  .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#2d5a3a;}
+  .product-item{background:#1a3a2a;padding:1.5rem;border:1px solid #2d5a3a;transition:background .2s;}
+  .product-item:hover{background:#2d5a3a;}
+  .product-item h3{font-size:.9rem;font-weight:600;color:#e8dece;letter-spacing:.5px;margin-bottom:.5rem;}
+  .product-item a{font-size:.75rem;color:#d4a843;letter-spacing:1px;text-transform:uppercase;font-weight:600;}
+
+  /* VISION BANNER */
+  .vision-banner{background:#f8f4ee;border-top:3px solid #d4a843;border-bottom:3px solid #d4a843;padding:50px 2rem;}
+  .vision-inner{max-width:900px;margin:auto;text-align:center;}
+  .vision-inner blockquote{font-family:'Playfair Display',serif;font-size:1.4rem;color:#1a3a2a;line-height:1.6;font-style:italic;margin-bottom:2rem;}
+  .contact-cta{display:flex;align-items:center;justify-content:center;gap:2rem;flex-wrap:wrap;}
+  .phone-num{font-size:1.4rem;font-weight:700;color:#1a3a2a;letter-spacing:1px;}
+  .btn-dark{background:#1a3a2a;color:#d4a843;padding:12px 28px;font-size:.82rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;transition:background .2s;}
+  .btn-dark:hover{background:#0f2a1a;}
+
+  /* WHY BROKER */
+  .why-section{max-width:1100px;margin:60px auto;padding:0 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+  .why-content .section-label{text-align:left;}
+  .why-content h2{font-family:'Playfair Display',serif;font-size:2rem;color:#1a3a2a;margin-bottom:1.2rem;}
+  .why-content p{color:#555;line-height:1.8;font-size:.95rem;margin-bottom:1.2rem;}
+  .why-img{background:linear-gradient(135deg,#2d6a4f,#1a3a2a);height:340px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+  .why-img::after{content:'🐘';font-size:8rem;opacity:.15;position:absolute;}
+  .why-img-label{font-family:'Playfair Display',serif;font-size:1.2rem;color:rgba(255,255,255,.7);text-align:center;z-index:1;}
+
+  /* CLIENTS */
+  .clients-section{background:#f8f4ee;padding:40px 2rem;}
+  .clients-inner{max-width:1100px;margin:auto;}
+  .clients-section .section-label{text-align:center;}
+  .clients-section h3{font-family:'Playfair Display',serif;font-size:1.3rem;color:#1a3a2a;text-align:center;margin-bottom:2rem;}
+  .clients-row{display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;justify-content:center;}
+  .client-logo{background:#fff;border:1px solid #e0d8cc;padding:14px 24px;font-weight:700;font-size:.9rem;color:#1a3a2a;letter-spacing:1px;min-width:130px;text-align:center;}
+
+  /* FOOTER */
+  footer{background:#0f2a1a;color:#e8dece;padding:50px 2rem 24px;}
+  .footer-inner{max-width:1100px;margin:auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:3rem;margin-bottom:3rem;}
+  .footer-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:#d4a843;margin-bottom:1rem;letter-spacing:1px;}
+  .footer-tagline{font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.6;}
+  .footer-col h4{font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:#d4a843;margin-bottom:1.2rem;font-weight:700;}
+  .footer-col p{font-size:.85rem;color:rgba(255,255,255,.6);line-height:1.8;}
+  .social-links{display:flex;gap:.8rem;margin-top:1rem;}
+  .social-links a{width:36px;height:36px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#d4a843;transition:background .2s;}
+  .social-links a:hover{background:#d4a843;color:#1a1a1a;}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:1.5rem;font-size:.78rem;color:rgba(255,255,255,.4);text-align:center;}
+  .footer-bottom span{color:#d4a843;}
+
+  /* CHATBOT */
+  .chat-fab{position:fixed;bottom:28px;right:28px;z-index:9999;width:58px;height:58px;background:#d4a843;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;transition:transform .2s,background .2s;}
+  .chat-fab:hover{background:#b8860b;transform:scale(1.08);}
+  .chat-fab svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:2;}
+  .chat-window{position:fixed;bottom:100px;right:28px;z-index:9998;width:370px;max-height:580px;background:#fff;border:1px solid #e0d8cc;box-shadow:0 12px 40px rgba(0,0,0,.18);display:flex;flex-direction:column;transform:scale(0);transform-origin:bottom right;transition:transform .25s cubic-bezier(.34,1.56,.64,1);opacity:0;}
+  .chat-window.open{transform:scale(1);opacity:1;}
+  .chat-header{background:#1a3a2a;color:#fff;padding:1rem 1.2rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+  .chat-header-left{display:flex;align-items:center;gap:.75rem;}
+  .chat-avatar{width:36px;height:36px;background:#d4a843;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;color:#1a1a1a;flex-shrink:0;}
+  .chat-header h4{font-size:.9rem;font-weight:700;letter-spacing:.5px;}
+  .chat-header p{font-size:.72rem;color:rgba(255,255,255,.6);}
+  .chat-close{background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;font-size:1.3rem;line-height:1;padding:4px;}
+  .chat-close:hover{color:#fff;}
+  .chat-msgs{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.75rem;min-height:200px;}
+  .msg{max-width:85%;font-size:.85rem;line-height:1.5;padding:.7rem 1rem;animation:fadeUp .3s ease;}
+  .msg.bot{align-self:flex-start;background:#f8f4ee;border:1px solid #e8dece;color:#1a3a2a;border-radius:0 12px 12px 12px;}
+  .msg.user{align-self:flex-end;background:#1a3a2a;color:#fff;border-radius:12px 12px 0 12px;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .quick-questions{padding:.75rem 1rem;border-top:1px solid #f0e8d8;flex-shrink:0;}
+  .quick-questions p{font-size:.72rem;color:#999;margin-bottom:.6rem;letter-spacing:.5px;text-transform:uppercase;}
+  .qq-grid{display:flex;flex-direction:column;gap:.4rem;}
+  .qq-btn{background:#f8f4ee;border:1px solid #e8dece;padding:.5rem .8rem;font-size:.78rem;color:#1a3a2a;cursor:pointer;text-align:left;transition:background .15s;font-family:'Source Sans 3',sans-serif;}
+  .qq-btn:hover{background:#e8dece;}
+  .chat-input-area{padding:.75rem 1rem;border-top:1px solid #e0d8cc;display:flex;gap:.6rem;flex-shrink:0;}
+  .chat-input{flex:1;border:1px solid #e0d8cc;padding:.6rem .9rem;font-size:.85rem;font-family:'Source Sans 3',sans-serif;outline:none;color:#222;}
+  .chat-input:focus{border-color:#1a3a2a;}
+  .chat-send{background:#1a3a2a;color:#d4a843;border:none;padding:.6rem 1rem;cursor:pointer;font-size:.82rem;font-weight:700;letter-spacing:.5px;transition:background .2s;}
+  .chat-send:hover{background:#0f2a1a;}
+  .typing-indicator{display:flex;gap:4px;align-items:center;padding:8px 12px;}
+  .typing-dot{width:6px;height:6px;background:#999;border-radius:50%;animation:bounce 1s infinite;}
+  .typing-dot:nth-child(2){animation-delay:.2s;}
+  .typing-dot:nth-child(3){animation-delay:.4s;}
+  @keyframes bounce{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-6px);}}
+
+  /* RESPONSIVE */
+  @media(max-width:900px){
+    .services-grid{grid-template-columns:1fr;}
+    .products-grid{grid-template-columns:repeat(2,1fr);}
+    .why-section{grid-template-columns:1fr;}
+    .footer-inner{grid-template-columns:1fr;}
+    .nav-links{display:none;}
+    .chat-window{width:calc(100vw - 40px);right:20px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <div>
+        <span class="logo-text">SATIB</span>
+        <span class="logo-sub">Insurance Brokers</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li>
+        <a href="#">Who We Are ▾</a>
+        <div class="dropdown">
+          <a href="#">About Us</a>
+        </div>
+      </li>
+      <li>
+        <a href="#">Our Teams ▾</a>
+        <div class="dropdown">
+          <a href="#">Leadership</a>
+          <a href="#">Bulawayo Team</a>
+          <a href="#">Harare Team</a>
+        </div>
+      </li>
+      <li><a href="#">Our Services</a></li>
+      <li><a href="#">Products</a></li>
+      <li><a href="#" style="color:#d4a843;">Contact Us</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===== HERO SLIDER ===== -->
+<section class="hero">
+  <div class="slide active" id="slide1">
+    <div class="slide-bg"></div>
+    <div class="slide-content">
+      <div class="slide-tag">Personal Insurance</div>
+      <h1>Health, Wealth and Happiness</h1>
+      <p>Personal insurance, investments and medical cover to take care of things closest to your heart.</p>
+      <div class="slide-btns">
+        <button class="btn-primary">Read More</button>
+        <button class="btn-outline">Contact Us</button>
+      </div>
+    </div>
+  </div>
+  <div class="slide" id="slide2">
+    <div class="slide-bg"></div>
+    <div class="slide-content">
+      <div class="slide-tag">Industry Solutions</div>
+      <h1>Specialized Cover for Dynamic Industries</h1>
+      <p>Whether for the tourism industry or your personal use, you cannot afford to be left without a safety net.</p>
+      <div class="slide-btns">
+        <button class="btn-primary">Read More</button>
+        <button class="btn-outline">Contact Us</button>
+      </div>
+    </div>
+  </div>
+  <div class="slide" id="slide3">
+    <div class="slide-bg"></div>
+    <div class="slide-content">
+      <div class="slide-tag">Crisis Management</div>
+      <h1>Expect the Unexpected</h1>
+      <p>Danger could be hiding just out of sight. Our clients get access to SATIB24 crisis call center.</p>
+      <div class="slide-btns">
+        <button class="btn-primary">Read More</button>
+        <button class="btn-outline">Contact Us</button>
+      </div>
+    </div>
+  </div>
+  <div class="slide-dots">
+    <div class="dot active" onclick="goSlide(0)"></div>
+    <div class="dot" onclick="goSlide(1)"></div>
+    <div class="dot" onclick="goSlide(2)"></div>
+  </div>
+</section>
+
+<!-- ===== WELCOME / SERVICES ===== -->
+<section class="welcome">
+  <div class="section-label">Welcome to Our Firm</div>
+  <h2>Our dedicated team specializes in customizing solutions to meet each customer's unique requirements. We have an added advantage with access to offshore risk managers who collaborate with our local risk managers in providing the most efficient and effective solutions, at the most competitive prices.</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9h18M8 4v5M16 4v5"/></svg>
+      </div>
+      <h3>Broking Services</h3>
+      <p>We connect you with the best insurers to ensure comprehensive coverage tailored to your specific needs and budget.</p>
+      <a href="#">Read More →</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 3L4 7v5c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V7L12 3z"/></svg>
+      </div>
+      <h3>Risk Management</h3>
+      <p>Our offshore and local risk managers collaborate to identify, assess, and mitigate risks efficiently and effectively.</p>
+      <a href="#">Read More →</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9S3 16.97 3 12 7.03 3 12 3s9 4.03 9 9z"/></svg>
+      </div>
+      <h3>Claims Management</h3>
+      <p>We advocate on your behalf to ensure swift, fair settlements when you need it most — guiding every step.</p>
+      <a href="#">Read More →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRODUCTS ===== -->
+<section class="products-section">
+  <div class="products-inner">
+    <div class="section-label" style="text-align:center;">What We Offer</div>
+    <h2>Insurance Products</h2>
+    <div class="products-grid">
+      <div class="product-item"><h3>Farming &amp; Engineering</h3><a href="#">Read More →</a></div>
+      <div class="product-item"><h3>Business &amp; Cyber Security</h3><a href="#">Read More →</a></div>
+      <div class="product-item"><h3>Bonds &amp; Guarantees</h3><a href="#">Read More →</a></div>
+      <div class="product-item"><h3>Custom Bonds</h3><a href="#">Read More →</a></div>
+      <div class="product-item"><h3>Safari &amp; Tourism</h3><a href="#">Read More →</a></div>
+      <div class="product-item"><h3>Motor &amp; Marine</h3><a href="#">Read More →</a></div>
+      <div class="product-item"><h3>Home Combined</h3><a href="#">Read More →</a></div>
+      <div class="product-item"><h3>Medical Cover</h3><a href="#">Read More →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VISION BANNER ===== -->
+<section class="vision-banner">
+  <div class="vision-inner">
+    <div class="section-label">Our Vision</div>
+    <blockquote>Our vision is to be Africa's leading insurance broker for corporate and private enterprises requiring specialist risk solutions, whilst contributing to and promoting sustainable business practices within our sphere of influence.</blockquote>
+    <div class="contact-cta">
+      <div class="phone-num">0292 230 093/4</div>
+      <button class="btn-dark">Contact Us</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHY BROKER ===== -->
+<section class="why-section">
+  <div class="why-content">
+    <div class="section-label">The Broker Advantage</div>
+    <h2>Why Use a Broker?</h2>
+    <p>Most of us have been trained, by advertising, to believe that those that offer car and house insurance on TV, in magazines, and on billboards are less expensive due to the middleman (the broker) being cut out.</p>
+    <p>What many clients don't understand is that they are dealing directly with the insurer who is offering them one product. A broker gives you access to multiple insurers and competitive pricing — all at no extra cost to you.</p>
+    <button class="btn-dark" style="margin-top:.5rem;">Read More</button>
+  </div>
+  <div class="why-img">
+    <span class="why-img-label">Zimbabwe's Wildlife — Protected by SATIB</span>
+  </div>
+</section>
+
+<!-- ===== CLIENTS ===== -->
+<section class="clients-section">
+  <div class="clients-inner">
+    <div class="section-label">Trusted By</div>
+    <h3>Our Valued Clients</h3>
+    <div class="clients-row">
+      <div class="client-logo">Probottlers</div>
+      <div class="client-logo">Probrands</div>
+      <div class="client-logo">Profeeds</div>
+      <div class="client-logo">Pick n Pay</div>
+      <div class="client-logo">BancABC</div>
+      <div class="client-logo">Tanganda</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">SATIB</div>
+      <p class="footer-tagline">A licensed financial service provider<br>FSP Licence No: 16388</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/profile.php?id=100039837416232" target="_blank">f</a>
+        <a href="https://www.linkedin.com/company/satib-insurance-brokers" target="_blank">in</a>
+        <a href="mailto:info@satib.co.zw">@</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Head Office — Bulawayo</h4>
+      <p>50A Livingstone Road<br>Suburbs | Bulawayo<br>Tel: (+263) 29 2230 093/4</p>
+    </div>
+    <div class="footer-col">
+      <h4>Harare Office</h4>
+      <p>59 Princess Drive<br>Highlands | Harare<br>Tel: (+263) 24 2850 611/22/44</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; Copyright 2025 <span>SATIB</span> is a licensed financial service provider FSP Licence No: 16388. All rights reserved.
+    Developed by Notus Hosting Services
+  </div>
+</footer>
+
+<!-- ===== AI CHATBOT ===== -->
+<button class="chat-fab" id="chatFab" aria-label="Open SATIB AI Assistant">
+  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+</button>
+
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">
+    <div class="chat-header-left">
+      <div class="chat-avatar">AI</div>
+      <div>
+        <h4>SATIB Assistant</h4>
+        <p>Powered by AI &bull; Replies instantly</p>
+      </div>
+    </div>
+    <button class="chat-close" id="chatClose">&#10005;</button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs">
+    <div class="msg bot">&#128075; Hello! I'm the SATIB AI Assistant. I can answer questions about our insurance products, services, and how we can help protect what matters most to you. How can I help?</div>
+  </div>
+  <div class="quick-questions" id="quickQs">
+    <p>Quick Questions</p>
+    <div class="qq-grid" id="qqGrid"></div>
+  </div>
+  <div class="chat-input-area">
+    <input class="chat-input" id="chatInput" type="text" placeholder="Type your question..." />
+    <button class="chat-send" id="chatSendBtn">Send</button>
+  </div>
+</div>
+
+<script>
+// ===== SLIDER =====
+let cur = 0;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+function goSlide(n) {
+  slides[cur].classList.remove('active');
+  dots[cur].classList.remove('active');
+  cur = n;
+  slides[cur].classList.add('active');
+  dots[cur].classList.add('active');
+}
+setInterval(() => goSlide((cur + 1) % slides.length), 5000);
+
+// ===== CHATBOT =====
+const fab = document.getElementById('chatFab');
+const win = document.getElementById('chatWindow');
+const closeBtn = document.getElementById('chatClose');
+const msgs = document.getElementById('chatMsgs');
+const input = document.getElementById('chatInput');
+const sendBtn = document.getElementById('chatSendBtn');
+const qqGrid = document.getElementById('qqGrid');
+const quickQs = document.getElementById('quickQs');
+
+// 5 Pre-built Q&A pairs for showcase
+const QA = [
+  {
+    q: "What insurance products does SATIB offer?",
+    a: "SATIB offers a wide range of insurance products including:\n\n🏡 Home Combined\n🚗 Motor & Marine\n🌿 Farming & Engineering\n💼 Business & Cyber Security\n🔒 Bonds & Guarantees\n📋 Custom Bonds\n🦁 Safari & Tourism\n🏥 Medical Cover\n\nEach product is tailored to meet your specific needs at the most competitive prices."
+  },
+  {
+    q: "How do I make a claim with SATIB?",
+    a: "Making a claim with SATIB is straightforward. Simply contact our team:\n\n📞 Bulawayo: (+263) 29 2230 093/4\n📞 Harare: (+263) 24 2850 611/22/44\n📧 Email: info@satib.co.zw\n\nOur dedicated claims management team will guide you through every step and advocate on your behalf for a swift, fair settlement."
+  },
+  {
+    q: "Why should I use a broker instead of going direct?",
+    a: "Using a broker like SATIB gives you access to multiple insurers simultaneously, meaning we find you the most competitive pricing.\n\nUnlike going direct — where you only get one insurer's product — we compare options across the entire market on your behalf.\n\nBest of all, our advisory service is complimentary to all our clients. Expert guidance at no extra cost to you!"
+  },
+  {
+    q: "Where are SATIB's offices located?",
+    a: "SATIB has two offices in Zimbabwe:\n\n📍 Head Office — Bulawayo\n50A Livingstone Road, Suburbs\nTel: (+263) 29 2230 093/4\n\n📍 Harare Office\n59 Princess Drive, Highlands\nTel: (+263) 24 2850 611/22/44\n\nYou're welcome to visit or call either branch — our team is always happy to assist!"
+  },
+  {
+    q: "Does SATIB cover safari and tourism businesses?",
+    a: "Yes! SATIB has specialist cover designed specifically for the safari and tourism industry.\n\nWhether you operate game lodges, tour operations, or related services, we understand the unique risks involved in this dynamic sector.\n\nOur offshore risk managers collaborate with our local Zimbabwean team to provide comprehensive, competitively priced cover tailored exactly for your business needs."
+  }
+];
+
+// Render quick question buttons
+QA.forEach((item) => {
+  const btn = document.createElement('button');
+  btn.className = 'qq-btn';
+  btn.textContent = item.q;
+  btn.onclick = () => handleQ(item.q, item.a);
+  qqGrid.appendChild(btn);
+});
+
+// Toggle chat window
+fab.onclick = () => win.classList.toggle('open');
+closeBtn.onclick = () => win.classList.remove('open');
+
+function addMsg(text, type) {
+  const d = document.createElement('div');
+  d.className = 'msg ' + type;
+  d.style.whiteSpace = 'pre-line';
+  d.textContent = text;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+  const d = document.createElement('div');
+  d.className = 'msg bot';
+  d.id = 'typing';
+  d.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+  return d;
+}
+
+// Handle quick question clicks
+function handleQ(q, a) {
+  addMsg(q, 'user');
+  quickQs.style.display = 'none';
+  const t = showTyping();
+  setTimeout(() => {
+    t.remove();
+    addMsg(a, 'bot');
+  }, 900 + Math.random() * 400);
+}
+
+// Handle free-text input with Claude API
+async function handleFreeText(q) {
+  q = q.trim();
+  if (!q) return;
+  input.value = '';
+  addMsg(q, 'user');
+  quickQs.style.display = 'none';
+  const t = showTyping();
+
+  // Check if it matches a known Q&A first
+  const lower = q.toLowerCase();
+  const match = QA.find(item =>
+    item.q.toLowerCase().split(' ').slice(0, 4).some(w => lower.includes(w))
+  );
+  if (match && lower.split(' ').length < 6) {
+    setTimeout(() => { t.remove(); addMsg(match.a, 'bot'); }, 700);
+    return;
+  }
+
+  // Call Anthropic Claude API
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        system: "You are a helpful AI assistant for SATIB Insurance Brokers, a leading insurance broker in Zimbabwe. SATIB offers: Home Combined, Motor & Marine, Farming & Engineering, Business & Cyber Security, Bonds & Guarantees, Custom Bonds, Safari & Tourism, and Medical Cover. Head office: 50A Livingstone Road, Suburbs, Bulawayo. Tel: (+263) 29 2230 093/4. Harare office: 59 Princess Drive, Highlands, Harare. Tel: (+263) 24 2850 611/22/44. Email: info@satib.co.zw. Be professional, warm, concise, and helpful. Keep answers under 120 words.",
+        messages: [{ role: "user", content: q }]
+      })
+    });
+    const data = await res.json();
+    t.remove();
+    const text = data.content && data.content[0] && data.content[0].text
+      ? data.content[0].text
+      : "Thank you for your question! Please contact us at info@satib.co.zw or call (+263) 29 2230 093/4 and our team will be happy to assist.";
+    addMsg(text, 'bot');
+  } catch (e) {
+    t.remove();
+    addMsg("I'm sorry for the inconvenience. Please contact us directly at info@satib.co.zw or call (+263) 29 2230 093/4 and our friendly team will assist you.", 'bot');
+  }
+}
+
+sendBtn.onclick = () => handleFreeText(input.value);
+input.onkeydown = e => { if (e.key === 'Enter') handleFreeText(input.value); };
+</script>
+</body>
+</html>
